@@ -1,6 +1,6 @@
 # Faker::Name.name 
 # Faker::Address.city
-fan_id = rand(1...11)
+# fan_id = rand(1...11)
 
 
 10.times do
@@ -8,9 +8,9 @@ fan_id = rand(1...11)
     Fan.create(name: name)
 end
 
-Festival.create(name: "EDC", location: "Las Vegas", price: 299, artist: "Rezz, Carnage, Excision")
-Festival.create(name: "Audiotistic", location: "Los Angeles", price: 199, artist: "Drake, Eminem, NF")
-Festival.create(name: "Madness", location: "Houston", price: 299, artist: "Rapids, Elements, Idk")
+Festival.create(name: "EDC", location: "Las Vegas", price: 299, artist: "Rezz, Carnage, Excision", date: "05/15/2021")
+Festival.create(name: "Audiotistic", location: "Los Angeles", price: 199, artist: "Drake, Eminem, NF", date: "06/15/2021")
+Festival.create(name: "Madness", location: "Houston", price: 299, artist: "Rapids, Elements, Idk", date: "09/15/2021")
 
 
     

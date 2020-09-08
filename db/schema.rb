@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2020_09_08_152003) do
     t.string "location"
     t.integer "price"
     t.text "artist"
+    t.string "date"
   end
 
   create_table "tickets", force: :cascade do |t|

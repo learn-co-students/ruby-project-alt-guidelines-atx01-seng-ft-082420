@@ -5,6 +5,7 @@ class CreateFestivals < ActiveRecord::Migration[5.2]
       t.string :location
       t.integer :price
       t.text :artist
+      t.string :date
     end
   end
 end

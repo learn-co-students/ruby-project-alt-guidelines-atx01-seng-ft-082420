@@ -1,6 +1,22 @@
 #The $ makes prompt a global variable
 $prompt = TTY::Prompt.new
 
+def greet
+    puts 'Welcome to the App, the best source for festival information!'
+    fan_festival
+end
+
+def fan_festival
+    upcoming_festival = $prompt.select("Choose an upcoming festival", %w(EDC Audiotistic Madness))
+    found_festival = Festival.find_by(name: upcoming_festival)
+    puts found_festival
+end
+
+
+
+
+
+
 # name = prompt.ask("What is your name?")
 # puts name
 
@@ -9,12 +25,12 @@ $prompt = TTY::Prompt.new
 
 # password = prompt.mask("What is the secret?")
 # p password
-def start
-    p "Welcome to our Application!"
-    userInfo
-end
+# def start
+#     p "Welcome to our Application!"
+#     userInfo
+# end
 
-def userInfo
-    name = $prompt.ask("What is your name?")
-    password = $prompt.mask("What is your password?")
-end
+# def userInfo
+#     name = $prompt.ask("What is your name?")
+#     password = $prompt.mask("What is your password?")
+# end

@@ -1,5 +1,4 @@
 require_relative '../config/environment'
 
-
-start
-puts "hello world"
+greet
+# puts "Thinking of which festival to experience next?"
