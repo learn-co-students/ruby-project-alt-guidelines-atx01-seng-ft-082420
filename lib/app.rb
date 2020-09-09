@@ -9,7 +9,8 @@ end
 def fan_festival
     upcoming_festival = $prompt.select("Choose an upcoming festival", %w(EDC Audiotistic Madness))
     found_festival = Festival.find_by(name: upcoming_festival)
-    puts found_festival
+    puts "#{found_festival.name} is #{found_festival.date}. This year in #{found_festival.location} you can catch #{found_festival.artist}"
+    puts "Get your #{found_festival.name} ticket for $#{found_festival.price} before they sellout!"
 end
 
 
