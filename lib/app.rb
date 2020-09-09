@@ -3,7 +3,12 @@ $prompt = TTY::Prompt.new
 
 def greet
     puts 'Welcome to the App, the best source for festival information!'
-    fan_festival
+    account = $prompt.yes?("Do you have an account?")
+    if account == true
+        fan_festival
+    else
+        create_fan
+    end
 end
 
 def fan_festival
@@ -11,8 +16,28 @@ def fan_festival
     found_festival = Festival.find_by(name: upcoming_festival)
     puts "#{found_festival.name} is #{found_festival.date}. This year in #{found_festival.location} you can catch #{found_festival.artist}"
     puts "Get your #{found_festival.name} ticket for $#{found_festival.price} before they sellout!"
+    buy_ticket = $prompt.yes?("Do you want to buy a festival ticket?")
+    if buy_ticket == true
+        name = $prompt.ask("Enter your name:")
+        t_name = Fan.find_by(name: name)
+        Ticket.create(name: "#{found_festival.name}", fan_id: t_name.id, festival_id: found_festival.id)
+        puts "Purchase Successful"
+        binding.pry
+    else
+        return
+    end
 end
 
+def create_fan
+    puts 'Enter your name to continue'
+    name = $prompt.ask("What is your name?")
+    Fan.create(name: name)
+    fan_festival
+end
+
+def purchase_ticket
+
+end
 
 
 
