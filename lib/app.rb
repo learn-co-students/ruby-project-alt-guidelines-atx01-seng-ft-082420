@@ -15,6 +15,7 @@ end
 def find_fan(name)
     if Fan.find_by(name: name) == nil
         puts "Sorry User not found"
+        puts "You need to create an account"
         create_fan
     else
         fan = Fan.find_by(name: name)
@@ -35,23 +36,23 @@ def fan_festival(fan)
     if buy_ticket == true
         Ticket.create(name: "#{found_festival.name}", fan_id: fan.id, festival_id: found_festival.id)
         puts "Purchase Successful"
-        
+        app_exit(fan)
     else
         multi_option(fan)
     end
 end
 
 def create_fan
-    already_have = $prompt.yes?("Are you sure you have an account?")
-    if already_have == true
-        name = $prompt.ask("Enter account name so we can check:")
-        find_fan(name)
-    else
-        puts 'Enter your name to continue'
-        name = $prompt.ask("What is your name?")
-        Fan.create(name: name)
-        find_fan(name)
-    end
+    # already_have = $prompt.yes?("Are you sure you have an account?")
+    # if already_have == true
+    #     name = $prompt.ask("Enter account name so we can check:")
+    #     find_fan(name)
+    # else
+    puts 'Enter your name to continue'
+    name = $prompt.ask("What is your name?")
+    Fan.create(name: name)
+    find_fan(name)
+    # end
 end
 
 def multi_option(fan)
@@ -59,46 +60,54 @@ def multi_option(fan)
     if user_pick == "Refund"
         refund_ticket(fan)
     elsif user_pick == "Update"
-        update_ticket(fan)
+        update_user(fan)
     else
-        puts "Thank you for using our app!"
+        app_exit(fan)
     end
 end
 
 def refund_ticket(fan)
     all_tix = Fan.find_by(name: fan.name).tickets
-    # tix = $prompt.select
-    tix = all_tix.each do |ticket|
-        
+    choices = []
+    all_tix.each do |ticket|
+        choices.push(ticket.name)
     end
-   
     
+    ticket = $prompt.select("Which ticket do you want to refund?", choices)
+    # find_ticket = Ticket.where(name: ticket, fan_id: fan.id)
+    find_ticket = Ticket.find_by(name: ticket, fan_id: fan.id)
+    find_ticket.destroy
+    puts "Ticket Refunded"
+    
+    app_exit(fan)
 end
 
-def update_ticket(fan)
+def update_user(fan)
+    update = $prompt.yes?("Do you need to update your name?")
+    user = Fan.find_by(name: fan.name)
+    
+    if update == true
+        update_name = $prompt.ask("Enter new name:")
+        user.update(name: update_name)
+        app_exit(fan)
+    else
+        app_exit(fan)
+    end
 
 end
 
+def app_exit(fan)
+    choices = ["Buy Ticket", "Refund", "Update Name", "Exit"]
+    user_pick = $prompt.select("Did you need help with something else?", choices)
+    if user_pick == "Buy Ticket"
+        fan_festival(fan)
+    elsif user_pick == "Refund"
+        refund_ticket(fan)
+    elsif user_pick == "Update Name"
+        update_user(fan)
+    else
+        puts "Thank you for using our app!"
+    end
+end
 
 
-
-
-
-
-# name = prompt.ask("What is your name?")
-# puts name
-
-# ask = prompt.yes?("Do you like  Ruby?")
-# p ask
-
-# password = prompt.mask("What is the secret?")
-# p password
-# def start
-#     p "Welcome to our Application!"
-#     userInfo
-# end
-
-# def userInfo
-#     name = $prompt.ask("What is your name?")
-#     password = $prompt.mask("What is your password?")
-# end
