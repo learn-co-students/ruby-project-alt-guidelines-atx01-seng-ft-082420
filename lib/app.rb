@@ -67,19 +67,25 @@ def multi_option(fan)
 end
 
 def refund_ticket(fan)
-    all_tix = Fan.find_by(name: fan.name).tickets
-    choices = []
-    all_tix.each do |ticket|
-        choices.push(ticket.name)
+    if Fan.find_by(name: fan.name).tickets == []
+        puts "You don't have any tickets to refund"
+        app_exit(fan)
+    else
+        all_tix = Fan.find_by(name: fan.name).tickets
+        choices = []
+        all_tix.each do |ticket|
+            choices.push(ticket.name)
+        end
+        
+        ticket = $prompt.select("Which ticket do you want to refund?", choices)
+        # find_ticket = Ticket.where(name: ticket, fan_id: fan.id)
+        find_ticket = Ticket.find_by(name: ticket, fan_id: fan.id)
+        find_ticket.destroy
+        puts "Ticket Refunded"
+        
+        app_exit(fan)
     end
-    
-    ticket = $prompt.select("Which ticket do you want to refund?", choices)
-    # find_ticket = Ticket.where(name: ticket, fan_id: fan.id)
-    find_ticket = Ticket.find_by(name: ticket, fan_id: fan.id)
-    find_ticket.destroy
-    puts "Ticket Refunded"
-    
-    app_exit(fan)
+   
 end
 
 def update_user(fan)
